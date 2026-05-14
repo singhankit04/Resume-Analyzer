@@ -48,9 +48,6 @@ const skillsGapSchema = new mongoose.Schema({
 })
 
 
-
-
-
 const interviewReportSchema = new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
