@@ -9,6 +9,11 @@ export const authMiddleware = async (req, res, next) => {
             })
         }
         const decodedToken = await verifyAccessToken(accessToken);
+        if(!decodedToken){
+            return res.status(401).json({
+                message: "Unauthorized"
+            })
+        }
         req.user = decodedToken;
         next();
 

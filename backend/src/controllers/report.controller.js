@@ -1,8 +1,9 @@
-import { generate } from "../services/gemini.service.js";
+import { saveReport } from "../dao/report.dao.js";
+import {generateReport } from "../services/gemini.service.js";
 
 export const createReport = async (req, res) => {
     try {
-        pdfText=req.pdfText;
+        const pdfText=req.pdfText;
         const jobDescription = req.body.jobDescription;
 
         if(!jobDescription){
@@ -11,10 +12,12 @@ export const createReport = async (req, res) => {
             })
         }
 
-        const report = await generate(pdfText, jobDescription)
+        const report = await generateReport(pdfText, jobDescription);
+
+        const savedReport = await saveReport({user:req.user.id, resume:pdfText, jobDescription ,report}) 
         res.status(200).json({
             message: "Report Generated Successfully",
-            report
+            savedReport
         })
 
     } catch (error) {

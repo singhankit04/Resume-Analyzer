@@ -1,4 +1,4 @@
-import { getUser, createUser } from "../dao/user.dao.js";
+import { getUser, createUser} from "../dao/user.dao.js";
 import { cookieOption } from "../utils/cookies.utils.js";
 import { createAccessToken, createRefreshToken } from "../utils/jwtToken.js";
 
@@ -13,13 +13,14 @@ export const register = async (req, res) => {
         }
 
         const newUser = await createUser(name, email, password);
-     
+
         const refreshToken = createRefreshToken(newUser._id);
         const accessToken = createAccessToken(newUser._id);
 
         res.cookie("refreshToken", refreshToken, cookieOption);
         res.status(200).json({
             message: "User Created Successfully",
+
             accessToken
         })
 
@@ -36,13 +37,21 @@ export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const user = await getUser(email);
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Email and password are required"
+            });
+        }
 
-        if (!user || !user.password === password) {
+        const user = await getUser(email);
+      
+        if (!user || !(await user.isPasswordValid(password))) {
             return res.status(401).json({
                 message: "Invalid Credentials"
             })
         }
+
+
         const refreshToken = createRefreshToken(user._id);
         const accessToken = createAccessToken(user._id);
 

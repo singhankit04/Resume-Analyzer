@@ -5,7 +5,7 @@ import { finalReportSchema } from "./zodValidation.service.js";
 
 const ai = new GoogleGenAI({});
 
-export const generate = async (resumeText, jobDescription) => {
+export const generateReport = async (resumeText, jobDescription) => {
 
     const prompt = `You are an expert technical recruiter and career coach. Your task is to perform a deep analysis of the candidate's resume and compare it with the provided job description. Based on this comparison, you must generate a structured interview preparation report.
 
