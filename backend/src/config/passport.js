@@ -30,15 +30,10 @@ passport.use(
             email: profile.emails[0].value
           });
 
-          console.log("NEW USER CREATED");
         }
 
         // USER EXISTS
-
-        else {
-          console.log("USER ALREADY EXISTS");
-        }
-
+        
         done(null, user);
 
       } catch (error) {

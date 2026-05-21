@@ -41,16 +41,27 @@ authRouter.get(
     
     res.cookie("refreshToken", refreshToken, cookieOption);
 
-    res.status(200).json({
-      message: "Login Success",
-      accessToken,
-      user: req.user,
-    });
+    res.redirect(`http://localhost:5173/oauth-success?token=${accessToken}&user=${encodeURIComponent(JSON.stringify(user))}`);
   }
 );
 
 
 
 
+
+import { authMiddleware } from '../middlewares/auth.middleware.js';
+import { getUserById } from '../dao/user.dao.js';
+
+authRouter.get("/me", authMiddleware, async (req, res) => {
+  try {
+    const user = await getUserById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json({ user: { name: user.name, email: user.email } });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 export default authRouter;

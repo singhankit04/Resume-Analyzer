@@ -50,6 +50,7 @@ ${jobDescription}
 
     let cleanText = response.text.replace(/```(?:json)?/gi, '').trim();
     const report = finalReportSchema.parse(JSON.parse(cleanText));
+    console.log(report)
     return report;
 
 }

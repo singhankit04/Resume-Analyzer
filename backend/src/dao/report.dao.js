@@ -1,9 +1,9 @@
-import { InterviewReport } from "../models/interviewReport.model.js";
+import { Report } from "../models/report.model.js";
 
 
 export const saveReport = async ({user, resume, jobDescription, report}) => {
     try{
-        const savedReport = await InterviewReport.create({
+        const savedReport = await Report.create({
             user,
             resume,
             jobDescription,
@@ -17,10 +17,17 @@ export const saveReport = async ({user, resume, jobDescription, report}) => {
 
 
 export const getReportsbyUserId = async(userId)=>{
-    try{
-        const reports = await InterviewReport.find({user:userId})
-        return reports;
-    }catch(error){
-        console.log("reports not found ", error)
+   
+
+    const reports = await Report.find({user:userId}).sort({createdAt: -1});
+    return reports;
+ 
+}
+
+export const findReportById = async (reportId) => {
+    try {
+        return await Report.findById(reportId);
+    } catch (error) {
+        console.log("report not found ", error)
     }
 }

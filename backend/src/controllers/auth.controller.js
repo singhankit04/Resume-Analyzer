@@ -20,8 +20,8 @@ export const register = async (req, res) => {
         res.cookie("refreshToken", refreshToken, cookieOption);
         res.status(200).json({
             message: "User Created Successfully",
-
-            accessToken
+            accessToken,
+            user: { name: newUser.name, email: newUser.email }
         })
 
 
@@ -58,7 +58,8 @@ export const login = async (req, res) => {
         res.cookie("refreshToken", refreshToken, cookieOption);
         res.status(200).json({
             message: "User Logged In Successfully",
-            accessToken
+            accessToken,
+            user: { name: user.name, email: user.email }
         })
 
     } catch (error) {

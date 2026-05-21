@@ -30,7 +30,7 @@ const dayWisePlanSchema = new mongoose.Schema({
         required:true
     },
     subtopics:{
-         type:String,
+        type:[String],
         required:true
     },
 })
@@ -48,10 +48,10 @@ const skillsGapSchema = new mongoose.Schema({
 })
 
 
-const interviewReportSchema = new mongoose.Schema({
+const reportSchema = new mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"user",
+        ref:"User",
         index:true
     },
     resume:{
@@ -73,4 +73,4 @@ const interviewReportSchema = new mongoose.Schema({
 
 })
 
-export const InterviewReport = mongoose.model("InterviewReport", interviewReportSchema);
+export const Report = mongoose.model("Report", reportSchema);
