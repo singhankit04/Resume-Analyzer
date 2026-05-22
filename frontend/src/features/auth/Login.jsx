@@ -35,7 +35,8 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     // Redirect browser to backend Google auth endpoint
-    window.location.href = 'http://localhost:3000/auth/google';
+    const apiURL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+    window.location.href = `${apiURL}/auth/google`;
   };
 
   return (

@@ -14,7 +14,7 @@ export const setAccessToken = (token) => {
 export const getAccessToken = () => accessToken;
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ api.interceptors.response.use(
       try {
         // Send refresh token request (cookies are sent automatically due to withCredentials)
         const response = await axios.post(
-          'http://localhost:3000/auth/refresh',
+          `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}/auth/refresh`,
           {},
           { withCredentials: true }
         );

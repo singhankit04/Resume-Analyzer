@@ -41,7 +41,8 @@ authRouter.get(
     
     res.cookie("refreshToken", refreshToken, cookieOption);
 
-    res.redirect(`http://localhost:5173/oauth-success?token=${accessToken}&user=${encodeURIComponent(JSON.stringify(user))}`);
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+    res.redirect(`${frontendUrl}/oauth-success?token=${accessToken}&user=${encodeURIComponent(JSON.stringify(user))}`);
   }
 );
 
